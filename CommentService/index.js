@@ -1,20 +1,30 @@
 const express = require('express');
 // const session = require('express-session');
 const bodyParser = require('body-parser'); // Import body-parser
+const {logger, morganMiddleware} = require('./services/logger.service');
+require('dotenv').config({path: '.env.local'});
 
-const { logger, morganMiddleware } = require('./services/logger.service');
-require('dotenv').config({ path: '.env.local' });
-
-const app = express();  
+const app = express();
 const routes = require('./route/index.route')
 const cors = require('cors');
+const consumer = require('./messageQueue/consumer');
+const mangeAdminTopic = require('./messageQueue/kafkaAdmin');
 
 app.use(cors({
     origin: "*"
 }));
 
-app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded bodies
+mangeAdminTopic().then(() => {
+    logger.info('Kafka topics managed successfully');
+}).catch(err => {
+    logger.error('Error managing Kafka topics:', err);
+});
+consumer().catch((err) => {
+    logger.error(err);
+})
+app.use(bodyParser.urlencoded({extended: true})); // Parse URL-encoded bodies
 app.use(bodyParser.json()); // Parse JSON bodies
+
 
 app.use(morganMiddleware);
 app.use(routes);
