@@ -54,6 +54,10 @@ const taskSchema = new Schema({
     type: mongoose.Types.ObjectId,
     ref: 'Attachment'
   }],
+  subtasks: [{
+    type: mongoose.Types.ObjectId,
+    ref: 'Subtask'
+  }],
   history: [{
     type: mongoose.Types.ObjectId,
     ref: 'TaskHistory'
