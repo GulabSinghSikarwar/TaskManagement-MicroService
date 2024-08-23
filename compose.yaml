@@ -1,35 +1,61 @@
+#services:
+#  server:
+#    build:
+#      context: .
+#    environment:
+#      NODE_ENV: production
+#    ports:
+#      - 3000:3000
+#  kafka:
+#    image: apache/kafka
+#    container_name: kafka
+#    ports:
+#      - '9092:9092'
+#  userService:
+#    build:
+#      dockerfile: Dockerfile
+#      context: ./UserService
+#    container_name: userService
+#    ports: -'8001:8001'
+#
+#  taskService:
+#    build:
+#      dockerfile: Dockerfile
+#      context: ./TaskService
+#    container_name: taskService
+#    ports: -'8002:8002'
+#
+#  nginx-proxy:
+#    build: Dockerfile
+#    context: ./proxy
+#    ports:
+#      - 80:80
+#    depends_on:
+#      - userService
+#      - taskService
+
+version: '3.8'
+
 services:
-  server:
-    build:
-      context: .
-    environment:
-      NODE_ENV: production
+  zookeeper:
+    image: zookeeper:latest
+    container_name: zookeeper
     ports:
-      - 3000:3000
+      - "2181:2181"  # Expose Zookeeper port
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
   kafka:
-    image: apache/kafka
+    image: confluentinc/cp-kafka:latest
     container_name: kafka
     ports:
-      - '9092:9092'
-  userService:
-    build:
-      dockerfile: Dockerfile
-      context: ./UserService
-    container_name: userService
-    ports: -'8001:8001'
-
-  taskService:
-    build:
-      dockerfile: Dockerfile
-      context: ./TaskService
-    container_name: taskService
-    ports: -'8002:8002'
-
-  nginx-proxy:
-    build: Dockerfile
-    context: ./proxy
-    ports:
-      - 80:80
+      - "9092:9092"  # Expose Kafka port
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181  # Connect Kafka to Zookeeper service
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092  # Advertised listeners for Kafka
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1  # Set replication factor to 1 for development
     depends_on:
-      - userService
-      - taskService
+      - zookeeper  # Ensure Zookeeper starts before Kafka
+
