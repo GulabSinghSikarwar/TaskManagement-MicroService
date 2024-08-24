@@ -57,3 +57,8 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1  # Set replication factor to 1 for development
     depends_on:
       - zookeeper  # Ensure Zookeeper starts before Kafka
+  nginx:
+    build:
+      context: ./nginx-docker
+    ports:
+      - "80:80"
