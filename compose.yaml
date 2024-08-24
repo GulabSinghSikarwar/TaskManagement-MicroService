@@ -52,10 +52,8 @@ services:
     ports:
       - "9092:9092"  # Expose Kafka port
     environment:
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181  # Connect Kafka to Zookeeper service
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092  # Advertised listeners for Kafka
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
+      KAFKA_ZOOKEEPER_CONNECT: 192.168.29.220:2181  # Connect Kafka to Zookeeper service
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://192.168.29.220:9092  # Advertised listeners for Kafka
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1  # Set replication factor to 1 for development
     depends_on:
       - zookeeper  # Ensure Zookeeper starts before Kafka
-

@@ -19,10 +19,15 @@ const manageTopic = async () => {
 
     try {
         await admin.createTopics({
+            waitForLeaders: true,
             topics: [
-                {topic: process.env.COMMENT_ADDED_TOPIC, fromBeginning: true, numPartitions: 1},
-                {topic: process.env.COMMENT_UPDATED_TOPIC, fromBeginning: true, numPartitions: 1},
-                {topic: process.env.COMMENT_DELETED_TOPIC, fromBeginning: true, numPartitions: 1},
+                {topic: process.env.COMMENT_ADDED_TOPIC, fromBeginning: true, numPartitions: 2},
+                {topic: process.env.COMMENT_UPDATED_TOPIC, fromBeginning: true, numPartitions: 2},
+                {topic: process.env.COMMENT_DELETED_TOPIC, fromBeginning: true, numPartitions: 2},
+
+                {topic: process.env.TASK_UPDATED_TOPIC, fromBeginning: true, numPartitions: 2},
+                {topic: process.env.TASK_CREATED_TOPIC, fromBeginning: true, numPartitions: 2},
+                {topic: process.env.TASK_DELETED_TOPIC, fromBeginning: true, numPartitions: 2},
             ]
         })
     } catch (e) {
