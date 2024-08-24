@@ -13,12 +13,6 @@ const mangeAdminTopic = require('./messageQueue/kafkaAdmin');
 app.use(cors({
     origin: "*"
 }));
-
-mangeAdminTopic().then(() => {
-    logger.info('Kafka topics managed successfully');
-}).catch(err => {
-    logger.error('Error managing Kafka topics:', err);
-});
 consumer().catch((err) => {
     logger.error(err);
 })
