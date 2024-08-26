@@ -24,18 +24,42 @@ const createTopics = async () => {
         console.log(`Topics : ${JSON.stringify(topics)}`);
 
         if (!topics?.length) {
-            await admin.createTopics({
-                waitForLeaders: true,
-                topics: [
-                    { topic: process.env.COMMENT_ADDED_TOPIC, fromBeginning: true, numPartitions: 2 },
-                    { topic: process.env.COMMENT_UPDATED_TOPIC, fromBeginning: true, numPartitions: 2 },
-                    { topic: process.env.COMMENT_DELETED_TOPIC, fromBeginning: true, numPartitions: 2 },
+            const allTopics = extractTopics();
+            console.log("All topics : ", allTopics);
 
-                    { topic: process.env.TASK_UPDATED_TOPIC, fromBeginning: true, numPartitions: 2 },
-                    { topic: process.env.TASK_CREATED_TOPIC, fromBeginning: true, numPartitions: 2 },
-                    { topic: process.env.TASK_DELETED_TOPIC, fromBeginning: true, numPartitions: 2 },
-                ]
-            })
+            // Filter topics that don't already exist
+            const topicsToCreate = allTopics
+                .filter(topic => !topics.includes(topic))
+                .map(topic => ({
+                    topic,
+                    numPartitions: 2, // Default partition number, adjust if needed
+                    replicationFactor: 1 // Adjust replication factor as needed
+                }));
+
+            if (topicsToCreate.length) {
+                console.log("Topics : to create : ", topicsToCreate);
+
+                await admin.createTopics({
+                    waitForLeaders: true,
+                    topics: topicsToCreate
+                });
+                logger.info("New topics created successfully");
+            } else {
+                logger.info("No new topics to create");
+            }
+
+            // await admin.createTopics({
+            //     waitForLeaders: true,
+            //     topics: [
+            //         { topic: process.env.COMMENT_ADDED_TOPIC, fromBeginning: true, numPartitions: 2 },
+            //         { topic: process.env.COMMENT_UPDATED_TOPIC, fromBeginning: true, numPartitions: 2 },
+            //         { topic: process.env.COMMENT_DELETED_TOPIC, fromBeginning: true, numPartitions: 2 },
+
+            //         { topic: process.env.TASK_UPDATED_TOPIC, fromBeginning: true, numPartitions: 2 },
+            //         { topic: process.env.TASK_CREATED_TOPIC, fromBeginning: true, numPartitions: 2 },
+            //         { topic: process.env.TASK_DELETED_TOPIC, fromBeginning: true, numPartitions: 2 },
+            //     ]
+            // })
         }
 
     } catch (e) {
