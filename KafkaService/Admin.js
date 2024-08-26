@@ -1,6 +1,7 @@
-const {Kafka} = require('kafkajs')
-require('dotenv').config({path: '.env.local'});
-const {logger} = require('./logging.service')
+const { Kafka } = require('kafkajs')
+require('dotenv').config({ path: '.env.local' });
+const { logger } = require('./logging.service')
+const { extractTopics } = require('./utilities/helperFunctions')
 const kafka = new Kafka({
     clientId: process.env.KAFKA_CLIENT_ID,
     brokers: [process.env.KAFKA_BROKER]
@@ -26,13 +27,13 @@ const createTopics = async () => {
             await admin.createTopics({
                 waitForLeaders: true,
                 topics: [
-                    {topic: process.env.COMMENT_ADDED_TOPIC, fromBeginning: true, numPartitions: 2},
-                    {topic: process.env.COMMENT_UPDATED_TOPIC, fromBeginning: true, numPartitions: 2},
-                    {topic: process.env.COMMENT_DELETED_TOPIC, fromBeginning: true, numPartitions: 2},
+                    { topic: process.env.COMMENT_ADDED_TOPIC, fromBeginning: true, numPartitions: 2 },
+                    { topic: process.env.COMMENT_UPDATED_TOPIC, fromBeginning: true, numPartitions: 2 },
+                    { topic: process.env.COMMENT_DELETED_TOPIC, fromBeginning: true, numPartitions: 2 },
 
-                    {topic: process.env.TASK_UPDATED_TOPIC, fromBeginning: true, numPartitions: 2},
-                    {topic: process.env.TASK_CREATED_TOPIC, fromBeginning: true, numPartitions: 2},
-                    {topic: process.env.TASK_DELETED_TOPIC, fromBeginning: true, numPartitions: 2},
+                    { topic: process.env.TASK_UPDATED_TOPIC, fromBeginning: true, numPartitions: 2 },
+                    { topic: process.env.TASK_CREATED_TOPIC, fromBeginning: true, numPartitions: 2 },
+                    { topic: process.env.TASK_DELETED_TOPIC, fromBeginning: true, numPartitions: 2 },
                 ]
             })
         }

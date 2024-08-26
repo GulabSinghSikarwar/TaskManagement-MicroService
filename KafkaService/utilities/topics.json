@@ -1,0 +1,28 @@
+{
+    "USER": {
+      "CREATED": "user.created",
+      "UPDATED": "user.updated",
+      "DELETED": "user.deleted",
+      "ROLE_UPDATED": "user.roleUpdated",
+      "ACCOUNT_LOCKED": "user.accountLocked",
+      "PASSWORD_CHANGED": "user.passwordChanged"
+    },
+    "AUTH": {
+      "LOGIN": "auth.login",
+      "LOGOUT": "auth.logout",
+      "LOGIN_FAILED": "auth.loginFailed",
+      "TOKEN_ISSUED": "auth.tokenIssued",
+      "TOKEN_REVOKED": "auth.tokenRevoked",
+      "PASSWORD_RESET_REQUESTED": "auth.passwordResetRequested"
+    },
+    "COMMENT": {
+      "ADDED": "comment.added",
+      "UPDATED": "comment.updated",
+      "DELETED": "comment.deleted"
+    },
+    "TASK": {
+      "CREATED": "task.created",
+      "UPDATED": "task.updated",
+      "DELETED": "task.deleted"
+    }
+  }
