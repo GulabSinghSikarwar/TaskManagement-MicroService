@@ -25,7 +25,7 @@ const createTopics = async () => {
 
         if (!topics?.length) {
             const allTopics = extractTopics();
-            console.log("All topics : ", allTopics);
+            logger.info("All topics : ", allTopics);
 
             // Filter topics that don't already exist
             const topicsToCreate = allTopics
@@ -37,7 +37,7 @@ const createTopics = async () => {
                 }));
 
             if (topicsToCreate.length) {
-                console.log("Topics : to create : ", topicsToCreate);
+                logger.info("Topics : to create : ", topicsToCreate);
 
                 await admin.createTopics({
                     waitForLeaders: true,
