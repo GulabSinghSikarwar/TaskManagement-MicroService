@@ -5,5 +5,5 @@ const extractTopics = () => {
     return allTopics;
 }
 
-
-module.export = { extractTopics }
+// Corrected export statement
+module.exports = { extractTopics }
