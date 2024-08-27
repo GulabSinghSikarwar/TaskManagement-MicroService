@@ -25,7 +25,7 @@ app.use('/', (req, resp) => {
     })
 })
 
-const PORT = process.env.PORT || 8002;
+const PORT = process.env.PORT || 8001;
 app.listen(PORT, () => {
     // connectDB();
     logger.info(`Trello Task Service Server running on port ${PORT}`);
