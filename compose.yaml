@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # Zookeeper service for Kafka
   zookeeper:
@@ -11,47 +9,56 @@ services:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
 
-  # Kafka service
   kafka:
     image: confluentinc/cp-kafka:latest
     container_name: kafka
     ports:
       - "9092:9092" # Expose Kafka port
     environment:
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181 # Connect Kafka to Zookeeper service
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092 # Advertised listeners for Kafka
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181 # Use the service name 'zookeeper'
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092 # Use the service name 'kafka'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1 # Set replication factor to 1 for development
     depends_on:
       - zookeeper # Ensure Zookeeper starts before Kafka
-
   # CommentService microservice
-  commentService:
+  commentservice:
     build:
       context: ./CommentService
       dockerfile: Dockerfile
-    container_name: commentService
+    container_name: commentservice
     ports:
-      - '8000:8000' # Map port 8000 on the host to port 8000 in the container
+      - '8003:8003' # Map port 8000 on the host to port 8000 in the container
 
   # TaskService microservice
-  taskService:
+  taskservice:
     build:
       context: ./TaskService
       dockerfile: Dockerfile
-    container_name: taskService
+    container_name: taskservice
     ports:
       - '8002:8002' # Map port 8002 on the host to port 8002 in the container
 
   # UserService microservice
-  userService:
+  userservice:
     build:
       context: ./UserService
       dockerfile: Dockerfile
-    container_name: userService
+    container_name: userservice
     ports:
-      - '8001:8001' # Map port 8001 on the host to port 8001 in the container
+      - '8001:8001'
+  # KafkaService microservice
+  kafkaservice:
+    build:
+      context: ./KafkaService
+      dockerfile: Dockerfile
+    container_name: kafkaservice
+    ports:
+          - '9000:9000' # Map port 3000 on the host to port 3000 in the container 
 
-  # Nginx proxy service
+      # Nginx proxy service
+  
   nginx-proxy:
     build:
       context: ./nginx-docker
@@ -59,6 +66,6 @@ services:
     ports:
       - "80:80"
     depends_on:
-      - commentService
-      - taskService
-      - userService
+      - commentservice
+      - taskservice
+  #     - userservice

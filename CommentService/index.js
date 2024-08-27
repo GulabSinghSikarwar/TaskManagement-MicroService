@@ -8,7 +8,6 @@ const app = express();
 const routes = require('./route/index.route')
 const cors = require('cors');
 const consumer = require('./messageQueue/consumer');
-const mangeAdminTopic = require('./messageQueue/kafkaAdmin');
 
 app.use(cors({
     origin: "*"
