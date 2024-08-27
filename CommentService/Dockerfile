@@ -1,0 +1,22 @@
+# Dockerfile for CommentService
+
+# Use the Node.js 16 LTS base image
+FROM node:16-alpine
+
+# Set the working directory in the container
+WORKDIR /TaskService
+
+# Copy package.json and package-lock.json to the working directory
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy the rest of the application files to the working directory
+COPY . .
+
+# Expose port 8000 (or whatever port the service runs on)
+EXPOSE 8000
+
+# Start the service
+CMD ["npm", "start"]
