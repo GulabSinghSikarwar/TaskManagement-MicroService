@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   # Zookeeper service for Kafka
   zookeeper:
@@ -22,6 +24,13 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1 # Set replication factor to 1 for development
     depends_on:
       - zookeeper # Ensure Zookeeper starts before Kafka
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "9092"]
+      interval: 10s
+      retries: 10
+      start_period: 30s
+      timeout: 5s
+
   # CommentService microservice
   commentservice:
     build:
@@ -29,7 +38,7 @@ services:
       dockerfile: Dockerfile
     container_name: commentservice
     ports:
-      - '8003:8003' # Map port 8000 on the host to port 8000 in the container
+      - '8003:8003' # Map port 8003 on the host to port 8003 in the container
 
   # TaskService microservice
   taskservice:
@@ -48,16 +57,23 @@ services:
     container_name: userservice
     ports:
       - '8001:8001'
+        
   # KafkaService microservice
   kafkaservice:
+    environment:
+      KAFKA_BROKER: kafka:9092
+      KAFKA_CLIENT_ID: kafka-service
     build:
       context: ./KafkaService
       dockerfile: Dockerfile
     container_name: kafkaservice
     ports:
-      - '9000:9000' # Map port 3000 on the host to port 3000 in the container 
-    # Nginx proxy service
+      - '9000:9000' # Map port 9000 on the host to port 9000 in the container
+    depends_on:
+      kafka:
+        condition: service_healthy
 
+  # Nginx proxy service
   nginx-proxy:
     build:
       context: ./nginx-docker
