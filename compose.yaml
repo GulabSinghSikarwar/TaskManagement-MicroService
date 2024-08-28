@@ -59,7 +59,14 @@ services:
     container_name: userservice
     ports:
       - '8001:8001'
-
+    volumes:
+      - ./UserService:/UserService # Sync local code with container
+      - /UserService/node_modules # Avoid overwriting node_modules
+    working_dir: /UserService # Ensure nodemon is run in the right directory
+    command: sh -c "npm install && nodemon index.js"
+    # Use nodemon for auto-restart on changes
+    environment:
+      - CHOKIDAR_USEPOLLING=true
   # KafkaService microservice
   kafkaservice:
     environment:
