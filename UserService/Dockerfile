@@ -8,7 +8,6 @@ WORKDIR /UserService
 COPY package*.json ./
 
 # Install any needed dependencies
-RUN npm install
 
 # Install nodemon globally for auto-restart on file changes
 RUN npm install -g nodemon
@@ -16,6 +15,7 @@ RUN npm install -g nodemon
 # Copy the rest of the application code to the working directory
 COPY . .
 
+RUN npm install
 # Expose the port the app runs on (adjust as necessary for each service)
 EXPOSE 8001
 
