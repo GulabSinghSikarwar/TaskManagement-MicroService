@@ -1,9 +1,9 @@
 const router = require('express').Router()
 
-router.use('/api/tasks', (req, resp, next) => {
+router.use('/users', (req, resp, next) => {
     resp.json({
-       messages: "sucessfully redirected  to Tasks service "
-    })
+        messages: "sucessfully redirected  to User service in docker container Test 1 "
+    });
 })
 
 module.exports = router
