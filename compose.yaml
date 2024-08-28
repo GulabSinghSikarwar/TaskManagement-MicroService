@@ -25,7 +25,7 @@ services:
     depends_on:
       - zookeeper # Ensure Zookeeper starts before Kafka
     healthcheck:
-      test: ["CMD", "nc", "-z", "localhost", "9092"]
+      test: [ "CMD", "nc", "-z", "localhost", "9092" ]
       interval: 10s
       retries: 10
       start_period: 30s
@@ -39,7 +39,9 @@ services:
     container_name: commentservice
     ports:
       - '8003:8003' # Map port 8003 on the host to port 8003 in the container
-
+    depends_on:
+      kafka:
+        condition: service_healthy
   # TaskService microservice
   taskservice:
     build:
@@ -57,7 +59,7 @@ services:
     container_name: userservice
     ports:
       - '8001:8001'
-        
+
   # KafkaService microservice
   kafkaservice:
     environment:
