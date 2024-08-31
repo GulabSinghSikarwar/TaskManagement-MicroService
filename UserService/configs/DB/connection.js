@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { logger } = require('../services/logger');
+const { logger } = require('../../services/logger.service');
 const dbName = 'trello-task'
 const connectDB = async () => {
   try {
