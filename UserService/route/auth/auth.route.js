@@ -10,6 +10,9 @@ const router = express.Router();
 const {updateUser} =require('../../utils/auth.helper')
 const passwordGenerator = require('generate-password');
 
+router.get('/',(req,resp)=>{
+	return resp.json({status:"welcome to auth"})
+})
 router.post('/login', login);
 router.post('/login', (req, resp, next) => {
 	resp.status(401).json(
