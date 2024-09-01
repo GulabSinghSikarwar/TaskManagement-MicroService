@@ -9,6 +9,7 @@ const app = express();
 const routes = require('./route/index.route')
 const cors = require('cors');
 
+const {connectDB} =require('./configs/DB/connection')
 app.use(cors({
     origin: "*"
 }));
@@ -27,6 +28,6 @@ app.use('/', (req, resp) => {
 
 const PORT = process.env.PORT || 8001;
 app.listen(PORT, () => {
-    // connectDB();
+    connectDB();
     logger.info(`Trello Task Service Server running on port ${PORT}`);
 });
