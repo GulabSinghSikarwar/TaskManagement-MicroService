@@ -50,6 +50,9 @@ services:
     container_name: taskservice
     ports:
       - '8002:8002' # Map port 8002 on the host to port 8002 in the container
+    depends_on:
+      kafka:
+        condition: service_healthy
 
   # UserService microservice
   userservice:
