@@ -1,0 +1,28 @@
+{
+    "name": "register",
+    "url": "http://localhost:8001/auth/register",
+    "method": "POST",
+    "request": {
+        "username": "test1",
+        "password": "123456",
+        "isTotpEnable": true,
+        "is2FAEnabled": true,
+        "isFirstTimeLogin": false,
+        "totpSecret": "some-secret",
+        "qrCodeUri": "some-uri"
+    },
+    "response": {
+        "message": "User registered successfully",
+        "userDetails": {
+            "_id": "66ceed40271b1be3a51762c8",
+            "username": "test1",
+            "password": "$2a$10$MzGvEY1VwYBFlCUc8rWU2.kes4b0SXo3/xuIOawm6i.9aod5/mvxG",
+            "isTotpEnable": true,
+            "is2FAEnabled": true,
+            "isFirstTimeLogin": false,
+            "__v": 0,
+            "totpSecret": "GZESUKR6PF5V26BPNF3UE5ZDNRXCY4Z4",
+            "qrCodeUri": "otpauth://totp/MyApp?secret=GZESUKR6PF5V26BPNF3UE5ZDNRXCY4Z4&issuer=MyApp"
+        }
+    }
+}
