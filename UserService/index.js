@@ -1,5 +1,5 @@
 const express = require('express');
-// const session = require('express-session');
+const {connectDB} =require('./configs/DB/connection')
 const bodyParser = require('body-parser'); // Import body-parser
 
 const { logger, morganMiddleware } = require('./services/logger.service');
