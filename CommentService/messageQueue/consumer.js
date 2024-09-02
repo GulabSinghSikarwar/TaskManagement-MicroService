@@ -17,7 +17,7 @@ const runConsumer = async () => {
         await consumer.connect();
         logger.info("Successfully connected Consumer to Kafka");
 
-         await consumer.subscribe({ topic: process.env.COMMENT_ADDED_TOPIC, fromBeginning: true });
+        await consumer.subscribe({ topic: process.env.COMMENT_ADDED_TOPIC, fromBeginning: true });
         await consumer.subscribe({ topic: process.env.COMMENT_UPDATED_TOPIC, fromBeginning: true });
         await consumer.subscribe({ topic: process.env.COMMENT_DELETED_TOPIC, fromBeginning: true });
 
