@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../../models/User')
-const Task = require('../../models/Tasks')
+// const User = require('../../models/User')
+const Task = require('../../models/Task')
 const { Types } = require('mongoose')
 const { ObjectId } = require('mongodb');
 const { formatTaskStatus, formatAllTasks } = require('../task.util')
-const { updateTaskStatus, updateTask, deleteTask } = require('../../controllers/tasks/task.controller');
-const { logger } = require('../../services/logger');
+const { updateTaskStatus, updateTask, deleteTask, createTask } = require('../../controllers/tasks/task.controller');
+const { logger } = require('../../services/logger.service');
 const commentRouter = require('../commentRoutes/comments.routes')
 const replyRouter = require('../repliesRoutes/replies.routes')
 // const commentController = require('../../controllers/Tasks/taskComments/comment.controller')
@@ -14,19 +14,7 @@ const replyRouter = require('../repliesRoutes/replies.routes')
 
 router.use('/comments', commentRouter)
 router.use('/replies', replyRouter)
-router.post('/', async (req, res) => {
-    try {
-        const user = await User.findById(req.body.userId);
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-        const task = new Task({ title: req.body.title, content: req.body.content, status: req.body.status, userId: user._id });
-        await task.save();
-        res.status(201).json(task);
-    } catch (error) {
-        res.status(400).json({ message: 'Error creating task', error: error.message });
-    }
-});
+router.post('/', createTask);
 
 // Get all tasks for a user
 router.get('/:id', async (req, res) => {

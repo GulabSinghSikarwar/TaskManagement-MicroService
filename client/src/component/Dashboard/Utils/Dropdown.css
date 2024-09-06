@@ -1,0 +1,8 @@
+.searchbar-input{
+    /* border: 1px solid #ebe5e5; */
+    outline: none;
+    width: 100%;
+}
+.dropdown-pad{
+    padding-right: 0px;
+}

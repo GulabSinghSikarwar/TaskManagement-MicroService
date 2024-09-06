@@ -2,19 +2,24 @@
 const { sendToKafka } = require('../../services/kafka/producer.service')
 const Task = require('../../models/Task')
 
-
-export const createTask = async (req, res) => {
+const createTask = async (req, res) => {
     try {
-        const { taskDetails, userId } = req.body
-        const task = new Task({ title: taskDetails.title, content: taskDetails.content, status: taskDetails.status, userId: userId });
+        const { userId, title, content, status } = req.body;
+
+        // Create a new task instance
+        const task = new Task({ title, content, status, userId });
+
+        // Save the task to the database
         await task.save();
+
+        // Send a success response
         res.status(201).json(task);
     } catch (error) {
+        // Send an error response
         res.status(400).json({ message: 'Error creating task', error: error.message });
     }
-};
-
-export const updateTask = async (req, res) => {
+}
+const updateTask = async (req, res) => {
     try {
         const task = await Task.findById(req.params.id);
         if (!task) {
@@ -33,7 +38,7 @@ export const updateTask = async (req, res) => {
     }
 }
 
-export const updateTaskStatus = async (req, res) => {
+const updateTaskStatus = async (req, res) => {
     const { taskId } = req.params;
     const { status, userId } = req.body;
     // const userId = req.user._id; // Assuming user is attached to req
@@ -53,8 +58,7 @@ export const updateTaskStatus = async (req, res) => {
         res.status(500).json({ message: 'Error updating task status', error });
     }
 };
-
-export const deleteTask = async (req, res) => {
+const deleteTask = async (req, res) => {
     try {
         const task = await Task.findById(req.params.id);
         if (!task) {
@@ -73,3 +77,5 @@ export const deleteTask = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 }
+
+module.exports = { createTask, updateTask, deleteTask, updateTaskStatus }
