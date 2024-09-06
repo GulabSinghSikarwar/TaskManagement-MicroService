@@ -6,9 +6,9 @@ const kafka = new Kafka({
     brokers: [process.env.KAFKA_BROKERS],
 
 })
-export const producer = kafka.producer;
+const producer = kafka.producer;
 
-export const sendToKafka = async (topic, message) => {
+const sendToKafka = async (topic, message) => {
     await producer.connect();
     await producer.send({
         topic: topic,
@@ -16,3 +16,5 @@ export const sendToKafka = async (topic, message) => {
     })
     await producer.disconnect();
 }
+
+module.export = { producer, sendToKafka, }
