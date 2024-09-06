@@ -20,21 +20,21 @@ class ApplicationUrls {
     }
 
     get createTask() {
-        return url + '/task'
+        return url + '/api/tasks'
     }
 
     fetchComments(taskId) {
-        return url + `/task/${taskId}/comments/`
+        return url + `/api/tasks/${taskId}/comments/`
     }
 
     allTaskStatus(userId) {
-        return url + '/task/' + userId
+        return url + '/api/tasks/' + userId
     }
     updateTaskStatus(taskId) {
-        return url + '/task/' + taskId + '/status'
+        return url + '/api/tasks/' + taskId + '/status'
     }
     updateTask(taskId) {
-        return url + '/task/' + taskId
+        return url + '/api/tasks/' + taskId
     }
 
 
