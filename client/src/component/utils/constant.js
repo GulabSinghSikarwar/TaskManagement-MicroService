@@ -1,6 +1,6 @@
-export const url = 'http://localhost:8000'
+export const url = 'http://localhost'
 
-export const API_URL='http://localhost:8000'
+export const API_URL = 'http://localhost'
 
 export const tableColumn = {
   hostedZoneRecords: {
@@ -22,10 +22,10 @@ export const errorCodes = {
   Unauthorized: 401
 }
 
-export const MAP_API_KEY='AIzaSyBD7jSoGD54Ff0fdiqqdLkpQFxL-FdbBuQ'
+export const MAP_API_KEY = 'AIzaSyBD7jSoGD54Ff0fdiqqdLkpQFxL-FdbBuQ'
 
 
-export const commentSampleData =[
+export const commentSampleData = [
   {
     id: 1,
     author: 'Michael Gough',
@@ -98,4 +98,3 @@ export const commentSampleData =[
     replies: []
   }
 ]
- 
