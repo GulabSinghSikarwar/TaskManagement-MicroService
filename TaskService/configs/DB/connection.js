@@ -1,12 +1,13 @@
 const mongoose = require('mongoose');
-const { logger } = require('../services/logger');
+const { logger } = require('../../services/logger.service');
 const dbName = 'trello-task'
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(`mongodb+srv://gulab:gulab@cluster0.9otpy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0${dbName}`, {
+    const conn = await mongoose.connect(`mongodb+srv://gulab:gulab@cluster0.9otpy.mongodb.net/${dbName}?retryWrites=true&w=majority&appName=Cluster0`, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
+    
     const message = `MongoDB Connected: ${conn.connection.host}`
     logger.info(message)
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import dockerLogo from '../../icons/docker-logo.svg';
+import webLogo from '../../icons/logo.jpg';
 import './Header.css';
 
 function Header() {
@@ -31,7 +31,7 @@ function Header() {
         <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
             <div className="flex flex-wrap justify-between items-center">
                 <a href="https://flowbite.com" className="flex items-center">
-                    <img src={dockerLogo} className="mr-3 h-6 sm:h-9 custom-logo" alt="Flowbite Logo" />
+                    <img src={webLogo} className="mr-3   custom-logo" alt="Flowbite Logo" />
                 </a>
                 <div className="flex items-center lg:order-2">
                     {isLoggedIn ? (

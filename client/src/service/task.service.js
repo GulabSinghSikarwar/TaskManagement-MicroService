@@ -10,7 +10,11 @@ export const createTask = async (body) => {
 }
 export const fetchTaskStatus = async (userId) => {
     const url = applicationUrls.allTaskStatus(userId)
+    console.log("URL : ", url);
+
     const response = await axios.get(url);
+    console.log("resp : ",response);
+    
     return response.data
 }
 
@@ -34,14 +38,14 @@ export const updateTask = async (body) => {
     } catch (error) {
 
     }
-} 
+}
 
-export const deleteTask =async(body)=>{
+export const deleteTask = async (body) => {
     try {
-        console.log("DATA : ",body);
+        console.log("DATA : ", body);
         const url = applicationUrls.updateTask(body._id)
         const response = await axios.delete(url, {
-            data:body
+            data: body
         })
         return response.data;
     } catch (error) {
