@@ -1,7 +1,8 @@
-import { url } from "./constant";
+// import { url } from "./constant";
 
 class ApplicationUrls {
-    authUrl = url + '/auth'
+    url = ''
+    authUrl = this.url + ''
 
     get loginUrl() {
         return this.authUrl + '/login'
@@ -20,21 +21,21 @@ class ApplicationUrls {
     }
 
     get createTask() {
-        return url + '/api/tasks'
+        return  '/tasks'
     }
 
     fetchComments(taskId) {
-        return url + `/api/tasks/${taskId}/comments/`
+        return `/tasks/${taskId}/comments/`
     }
 
     allTaskStatus(userId) {
-        return url + '/api/tasks/' + userId
+        return  '/tasks/' + userId+'/'
     }
     updateTaskStatus(taskId) {
-        return url + '/api/tasks/' + taskId + '/status'
+        return  '/tasks/' + taskId + '/status'
     }
     updateTask(taskId) {
-        return url + '/api/tasks/' + taskId
+        return  '/tasks/' + taskId
     }
 
 

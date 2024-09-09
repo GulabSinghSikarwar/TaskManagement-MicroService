@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 // const User = require('../../models/User')
 const Task = require('../../models/Task')
-const { Types } = require('mongoose')
+const { Types, default: mongoose } = require('mongoose')
 const { ObjectId } = require('mongodb');
 const { formatTaskStatus, formatAllTasks } = require('../task.util')
 const { updateTaskStatus, updateTask, deleteTask, createTask } = require('../../controllers/tasks/task.controller');
@@ -18,45 +18,39 @@ router.post('/', createTask);
 
 // Get all tasks for a user
 router.get('/:id', async (req, res) => {
-    const userId = req.params.id;
+    const userId = new mongoose.Types.ObjectId(req.params.id);
     try {
-
-        console.log("User id : ", userId);
-        const user = await User.findById(userId);
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-        const id = new ObjectId(userId)
         const tasks = await Task.aggregate([
             {
-                $match: { userId: id }
+              $match: { userId: userId }
             },
             {
-                $group: {
-                    _id: "$status",
-                    tasks: { $push: "$$ROOT" } // use $$ROOT to include the entire document
-                }
+              $group: {
+                _id: "$status",
+                tasks: { $push: "$$ROOT" } // use $$ROOT to include the entire document
+              }
             },
             {
-                $project: {
-                    _id: 0,
-                    columnId: "$_id",
-                    title: {
-                        $switch: {
-                            branches: [
-                                { case: { $eq: ["$_id", "Pending"] }, then: "To Do" },
-                                { case: { $eq: ["$_id", "In Process"] }, then: "In Progress" },
-                                { case: { $eq: ["$_id", "Completed"] }, then: "Done" }
-                            ]
-                        }
-                    },
-                    tasks: 1 // include the tasks array in the output
-                }
+              $project: {
+                _id: 0,
+                columnId: "$_id",
+                title: {
+                  $switch: {
+                    branches: [
+                      { case: { $eq: ["$_id", "Pending"] }, then: "Pending" },
+                      { case: { $eq: ["$_id", "Progress"] }, then: "Progress" },
+                      { case: { $eq: ["$_id", "Completed"] }, then: "Completed" }
+                    ]
+                  }
+                },
+                tasks: 1 // include the tasks array in the output
+              }
             }
-        ]);
-
+          ]);
+        logger.info(` task ----: ${JSON.stringify(tasks)}`)
+        
         const allTasks = await Task.find({
-            userId: id
+            userId: userId
         })
         const response = {
             tasks: formatAllTasks(allTasks),

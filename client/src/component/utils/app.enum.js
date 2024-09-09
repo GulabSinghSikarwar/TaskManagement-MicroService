@@ -1,6 +1,6 @@
 export const status = {
     Pending: "Pending",
-    Progress: "In Process",
+    Progress: "Progress",
     Completed: "Completed"
 }
 export const statusName = {
