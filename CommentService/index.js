@@ -3,7 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser'); // Import body-parser
 const {logger, morganMiddleware} = require('./services/logger.service');
 require('dotenv').config({path: '.env.local'});
-
+const {connectDB} =require('./configs/DB/connection')
 const app = express();
 const routes = require('./route/index.route')
 const cors = require('cors');
@@ -31,6 +31,6 @@ app.use('/', (req, resp) => {
 
 const PORT = process.env.PORT || 8003;
 app.listen(PORT, () => {
-    // connectDB();
+    connectDB();
     logger.info(`Trello Task Service Server running on port ${PORT}`);
 });
