@@ -12,9 +12,10 @@ const consumer = require('./messageQueue/consumer');
 app.use(cors({
     origin: "*"
 }));
-consumer().catch((err) => {
-    logger.error(err);
-})
+
+// consumer().catch((err) => {
+//     logger.error(err);
+// })
 app.use(bodyParser.urlencoded({extended: true})); // Parse URL-encoded bodies
 app.use(bodyParser.json()); // Parse JSON bodies
 

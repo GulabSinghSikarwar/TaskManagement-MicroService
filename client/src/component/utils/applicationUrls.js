@@ -2,7 +2,7 @@
 
 class ApplicationUrls {
     url = ''
-    authUrl = this.url + ''
+    authUrl = this.url + '/auth'
 
     get loginUrl() {
         return this.authUrl + '/login'
@@ -21,7 +21,7 @@ class ApplicationUrls {
     }
 
     get createTask() {
-        return  '/tasks'
+        return '/tasks'
     }
 
     fetchComments(taskId) {
@@ -29,13 +29,13 @@ class ApplicationUrls {
     }
 
     allTaskStatus(userId) {
-        return  '/tasks/' + userId+'/'
+        return '/tasks/' + userId + '/'
     }
     updateTaskStatus(taskId) {
-        return  '/tasks/' + taskId + '/status'
+        return '/tasks/' + taskId + '/status'
     }
     updateTask(taskId) {
-        return  '/tasks/' + taskId
+        return '/tasks/' + taskId
     }
 
 

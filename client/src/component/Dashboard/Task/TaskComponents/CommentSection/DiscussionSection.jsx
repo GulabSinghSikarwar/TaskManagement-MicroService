@@ -3,7 +3,7 @@ import './commentsSection.css'
 import { commentSampleData } from '../../../../utils/constant';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchComments } from '../../../../../store/thunkStore/comment.thunk'
-const DiscussionSection = ({task}) => {
+const DiscussionSection = ({ task }) => {
   // const [comments] = useState(commentSampleData);
 
   const { comments, status, error } = useSelector((state) => state.comments);
@@ -14,8 +14,14 @@ const DiscussionSection = ({task}) => {
   const handleDropdownToggle = (id) => {
     setDropdownOpen(dropdownOpen === id ? null : id);
   };
+  const getComments = () => {
+    console.log("Get Comments : ", comments);
+    return comments
+
+  }
   useEffect(() => {
-    dispatch(fetchComments(task._id));
+    console.log(" comments : ", comments);
+    // dispatch(fetchComments(task._id));
   }, [dispatch, task._id]);
 
   return (
@@ -36,13 +42,13 @@ const DiscussionSection = ({task}) => {
             Post comment
           </button>
         </form>
-        {comments.map(comment => (
+        {getComments() && comments?.map(comment => (
           <article key={comment.id} className="p-6 text-sm bg-white rounded-lg dark:bg-gray-900 mb-3">
             <footer className="flex justify-between items-center mb-2">
               <div className="flex items-center">
                 <p className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
                   <img className="mr-2 w-6 h-6 rounded-full" src={comment.profilePicture} alt={comment.author} />
-                  {comment.username||'Bastard'}
+                  {comment.username || 'Bastard'}
                 </p>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
                   <time pubdate dateTime={comment.date} title={new Date(comment.date).toLocaleDateString()}>{new Date(comment.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</time>
