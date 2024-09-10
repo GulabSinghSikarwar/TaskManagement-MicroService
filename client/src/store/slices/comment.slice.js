@@ -2,10 +2,10 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import commentThunk from '../thunkStore/comment.thunk';
 import replyThunk from '../thunkStore/reply.thunk'
 import commentService from '../../service/taskService/comment.service';
-
+import { commentSampleData } from '../../component/utils/constant';
 // Initial state
 const initialState = {
-    comments: [],
+    comments: commentSampleData,
     status: 'idle',
     error: null,
 };

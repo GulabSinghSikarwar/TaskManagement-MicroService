@@ -36,5 +36,4 @@ const StatusCode = {
     GATEWAY_TIMEOUT: 504
 };
 
-
-module.exports = { credentials, StatusCode }
+module.exports = { credentials ,StatusCode}

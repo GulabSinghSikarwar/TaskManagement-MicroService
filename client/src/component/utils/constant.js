@@ -1,6 +1,6 @@
-export const url = 'http://localhost'
+export const url = 'http://localhost:8001'
 
-export const API_URL = 'http://localhost'
+export const API_URL = 'http://localhost:8001'
 
 export const tableColumn = {
   hostedZoneRecords: {
